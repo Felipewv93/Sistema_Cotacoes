@@ -146,8 +146,8 @@ Melhorias planejadas para versões futuras:
 ### Automação e Robustez
 - [ ] Implementar coleta automática periódica (scheduler)
 - [ ] Sistema de logs de execução
-- [ ] Tratamento de erros (API fora do ar, sem internet)
-- [ ] Validação e sanitização de dados
+- [x] Tratamento de erros (API fora do ar, sem internet)
+- [x] Validação e sanitização de dados
 - [ ] Testes unitários para funções principais
 
 ### Notificações
