@@ -126,16 +126,16 @@ Você pode criar um loop no código ou usar ferramentas como `schedule` para aut
 Melhorias planejadas para versões futuras:
 
 ### Análise de Dados
-- [ ] Calcular variação percentual diária das cotações
+- [x] Calcular variação percentual diária das cotações
 - [ ] Implementar médias móveis (7, 14, 30 dias)
 - [ ] Comparação entre períodos (semanal, mensal)
 - [ ] Identificar tendências de alta/baixa
 
 ### Visualização
-- [ ] Criar gráficos de linha mostrando evolução das cotações
-- [ ] Dashboard interativo com Streamlit ou Dash
-- [ ] Gráficos de correlação entre moedas
-- [ ] Indicadores visuais de variação
+- [x] Criar gráficos de linha mostrando evolução das cotações
+- [x] Dashboard interativo com Streamlit ou Dash
+- [x] Gráficos de correlação entre moedas
+- [x] Indicadores visuais de variação
 
 ### Expansão de Dados
 - [ ] Coletar dados históricos (últimos 30/90 dias)

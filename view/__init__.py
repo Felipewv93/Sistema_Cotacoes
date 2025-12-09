@@ -1,0 +1,1 @@
+from .dashboard import gerar_dashboard
