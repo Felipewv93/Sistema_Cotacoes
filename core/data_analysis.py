@@ -34,3 +34,24 @@ def calcular_variacao(primeira_cotacao, ultima_cotacao):
     else:
         print("Não foi possível calcular a variação, pois as cotações não foram encontradas.")
         return None, None, None
+    
+def calcular_media_movel(arquivo='data/cotacoes.xlsx', periodo=7):
+    if os.path.exists(arquivo):
+        df = pd.read_excel(arquivo)
+        df['data_hora'] = pd.to_datetime(df['data_hora'])
+        
+        df['data'] = df['data_hora'].dt.date
+        df = df.sort_values(by='data_hora')
+        
+        ultimas_cotacoes = df.groupby('data').last().reset_index()
+        
+        ultimas_cotacoes_periodo = ultimas_cotacoes.tail(periodo)
+        
+        media_movel_dolar = ultimas_cotacoes_periodo['dolar'].mean()
+        media_movel_euro = ultimas_cotacoes_periodo['euro'].mean()
+        media_movel_bitcoin = ultimas_cotacoes_periodo['bitcoin'].mean()
+        
+        return media_movel_dolar, media_movel_euro, media_movel_bitcoin
+    else:
+        print("O arquivo 'data/cotacoes.xlsx' não existe.")
+        return None, None, None

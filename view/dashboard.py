@@ -7,7 +7,7 @@ import os
 # Adicionar o diretório raiz ao path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from core.data_analysis import cotacoes_do_dia, calcular_variacao
+from core.data_analysis import cotacoes_do_dia, calcular_variacao, calcular_media_movel
 
 
 def gerar_dashboard():
@@ -53,6 +53,34 @@ def gerar_dashboard():
             label="₿ Bitcoin (BTC → BRL)",
             value=f"R$ {ultima_cotacao['bitcoin']:,.0f}",
             delta=f"{var_bitcoin:.2f}%"
+        )
+    
+    st.markdown("---")
+
+    # Cálculo da média móvel
+    media_movel_dolar, media_movel_euro, media_movel_bitcoin = calcular_media_movel()
+
+    # Métricas de Média Móvel
+    st.subheader("📈 Cotação Média dos Últimos 7 Dias")
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric(
+            label="💵 Dólar (USD → BRL)",
+            value=f"R$ {media_movel_dolar:.2f}"
+        )
+
+    with col2:
+        st.metric(
+            label="💶 Euro (EUR → BRL)",
+            value=f"R$ {media_movel_euro:.2f}"
+        )
+
+    with col3:
+        st.metric(
+            label="₿ Bitcoin (BTC → BRL)",
+            value=f"R$ {media_movel_bitcoin:,.0f}"
         )
     
     st.markdown("---")

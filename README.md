@@ -10,11 +10,25 @@ Este projeto busca cotações atualizadas de Dólar (USD), Euro (EUR) e Bitcoin 
 
 ## 🚀 Funcionalidades
 
+### Coleta de Dados
 - ✅ Busca de cotações em tempo real via API REST
 - ✅ Armazenamento em banco de dados SQLite
 - ✅ Exportação para planilha Excel
 - ✅ Registro de data e hora de cada coleta
 - ✅ Acumulação de dados (adiciona novas linhas sem sobrescrever)
+
+### Análise de Dados
+- ✅ Filtragem de cotações do dia atual
+- ✅ Cálculo de variação percentual entre primeira e última cotação do dia
+- ✅ Cálculo de média móvel (configúravel, padrão 7 dias)
+- ✅ Identificação automática da última cotação de cada dia
+
+### Visualização
+- ✅ Dashboard interativo com Streamlit
+- ✅ Gráficos de linha para evolução das cotações
+- ✅ Gráficos de barras para variações diárias
+- ✅ Métricas em tempo real (valores atuais e variações)
+- ✅ Visualização com Plotly (gráficos interativos)
 
 ## 📁 Estrutura do Projeto
 
@@ -23,17 +37,22 @@ projeto_dados/
 │
 ├── main.py                 # Arquivo principal de execução
 ├── requirements.txt        # Dependências do projeto
+├── README.md               # Documentação do projeto
 │
 ├── api/
 │   └── request.py          # Requisições à API de cotações
 │
 ├── core/
 │   ├── insert.py           # Inserção de dados no banco
-│   └── save_excel.py       # Salvamento em Excel
+│   ├── save_excel.py       # Salvamento em Excel
+│   └── data_analysis.py    # Análise de dados (variações, médias móveis)
 │
 ├── model/
 │   ├── __init__.py         # Inicialização do módulo
 │   └── database.py         # Configuração do banco de dados
+│
+├── view/
+│   └── dashboard.py        # Dashboard interativo com Streamlit
 │
 └── data/                   # Diretório para armazenamento
     ├── database.db         # Banco de dados SQLite (gerado)
@@ -47,6 +66,8 @@ projeto_dados/
 - **pandas** - Manipulação de dados e Excel
 - **openpyxl** - Engine para arquivos Excel
 - **sqlite3** - Banco de dados (built-in)
+- **streamlit** - Dashboard interativo
+- **plotly** - Visualização de dados interativa
 
 ## 📦 Instalação
 
@@ -61,6 +82,8 @@ pip install -r requirements.txt
 
 ## ▶️ Como Usar
 
+### Coleta de Cotações
+
 Execute o arquivo principal:
 
 ```bash
@@ -71,7 +94,22 @@ O sistema irá:
 1. Buscar as cotações atuais de Dólar, Euro e Bitcoin
 2. Inserir os dados no banco de dados SQLite
 3. Adicionar os dados na planilha Excel (criando nova linha)
-4. Exibir mensagens de confirmação
+4. Calcular variações do dia atual
+5. Exibir mensagens de confirmação
+
+### Dashboard Interativo
+
+Para visualizar o dashboard com gráficos e análises:
+
+```bash
+streamlit run view/dashboard.py
+```
+
+O dashboard exibe:
+- Valores atuais das cotações com variações percentuais
+- Gráfico de evolução temporal (linhas)
+- Gráfico de variações diárias (barras)
+- Médias móveis calculadas automaticamente
 
 ## 📊 Dados Coletados
 
@@ -104,9 +142,14 @@ Para cada execução, o sistema coleta:
 
 ## 🔍 Exemplos de Uso
 
-### Execução única
+### Coleta e armazenamento dos dados
 ```bash
 python main.py
+```
+
+### Gerar Dashboard
+```bash
+streamlit run view/dashboard.py
 ```
 
 ### Execução periódica (Windows Task Scheduler)
@@ -127,7 +170,7 @@ Melhorias planejadas para versões futuras:
 
 ### Análise de Dados
 - [x] Calcular variação percentual diária das cotações
-- [ ] Implementar médias móveis (7, 14, 30 dias)
+- [x] Implementar médias móveis (7, 14, 30 dias)
 - [ ] Comparação entre períodos (semanal, mensal)
 - [ ] Identificar tendências de alta/baixa
 
@@ -153,10 +196,6 @@ Melhorias planejadas para versões futuras:
 ### Notificações
 - [ ] Alertas por email quando cotação atingir determinado valor
 - [ ] Relatório diário/semanal automático
-
-## 📝 Licença
-
-Este projeto é de código aberto e está disponível para uso livre.
 
 ## 👤 Autor
 

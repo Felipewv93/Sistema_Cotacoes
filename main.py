@@ -10,7 +10,6 @@ def main():
         salvar_excel(cotacoes)
         cotacoes_hoje, primeira_cotacao, ultima_cotacao = cotacoes_do_dia('data/cotacoes.xlsx')
         calcular_variacao(primeira_cotacao, ultima_cotacao)
-        gerar_dashboard()
 
 if __name__ == '__main__':
     main()
