@@ -16,14 +16,13 @@ def automatizar_cotacoes():
 
 scheduler = BlockingScheduler()
 
-# Executa de hora em hora, das 9h às 18h, de segunda a sexta-feira
+
 scheduler.add_job(
     automatizar_cotacoes,
     'cron',
-    day_of_week='mon-fri',  # Segunda a sexta
-    hour='9-18',             # Das 9h às 18h (inclui 9h e 18h)
-    minute=0 ,                 # No minuto 0 de cada hora
-    misfire_grace_time=900
+    day_of_week='mon-fri',
+    hour='9-18',
+    minute=0 ,
 )
 
 print("=" * 60)
