@@ -20,7 +20,7 @@ Este projeto busca cotações atualizadas de Dólar (USD), Euro (EUR) e Bitcoin 
 ### Análise de Dados
 - ✅ Filtragem de cotações do dia atual
 - ✅ Cálculo de variação percentual entre primeira e última cotação do dia
-- ✅ Cálculo de média móvel (configúravel, padrão 7 dias)
+- ✅ Cálculo de média móvel (configurável, padrão 7 dias)
 - ✅ Identificação automática da última cotação de cada dia
 
 ### Visualização
@@ -187,7 +187,7 @@ Melhorias planejadas para versões futuras:
 - [ ] Incluir volume de negociação
 
 ### Automação e Robustez
-- [ ] Implementar coleta automática periódica (scheduler)
+- [x] Implementar coleta automática periódica (scheduler)
 - [ ] Sistema de logs de execução
 - [x] Tratamento de erros (API fora do ar, sem internet)
 - [x] Validação e sanitização de dados

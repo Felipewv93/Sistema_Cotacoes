@@ -5,7 +5,7 @@ if not os.path.exists('data'):
     os.makedirs('data')
 
 try:
-    banco = sqlite3.connect('data/database.db')
+    banco = sqlite3.connect('data/database.db', check_same_thread=False)
     cursor = banco.cursor()
 
     cursor.execute(""" CREATE TABLE IF NOT EXISTS cotacoes 
