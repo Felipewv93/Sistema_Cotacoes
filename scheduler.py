@@ -3,16 +3,17 @@ from datetime import datetime
 import model
 from api import buscar_cotacoes
 from core import inserir_dados, salvar_excel
+from core import configurar_logger, logger
 
 def automatizar_cotacoes():
-    print(f"[{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}] Iniciando coleta automática de cotações...")
+    logger.info("Iniciando coleta automática de cotações (Scheduler)")
     cotacoes = buscar_cotacoes()
     if cotacoes:
         inserir_dados(cotacoes)
         salvar_excel(cotacoes)
-        print("Cotações coletadas e salvas com sucesso.")
+        logger.info("Coleta automática finalizada com sucesso")
     else:
-        print("Falha ao buscar cotações.")
+        logger.error("Falha na coleta automática de cotações")
 
 scheduler = BlockingScheduler()
 

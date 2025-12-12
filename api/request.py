@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime
+from core import configurar_logger, logger
 
 
 url = 'https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,BTC-BRL'
@@ -17,12 +18,13 @@ def buscar_cotacoes():
                     'bitcoin': float(dados['BTCBRL']['bid']),
                     'data_hora': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 }
+                logger.info(f"Cotações obtidas - Dólar: R$ {cotacoes['dolar']:.4f}, Euro: R$ {cotacoes['euro']:.4f}, Bitcoin: R$ {cotacoes['bitcoin']:.2f}")
                 return cotacoes
             except KeyError as e:
-                print(f'Erro: Chave esperada não encontrada nos dados da API: {e}')
+                logger.error(f'Chave esperada não encontrada nos dados da API: {e}')
                 return None
             except (ValueError, TypeError) as e:
-                print(f'Erro: Não foi possível converter os valores para float: {e}')
+                logger.error(f'Não foi possível converter valores para float: {e}')
                 return None
                 
         elif response.status_code == 400:
@@ -34,11 +36,11 @@ def buscar_cotacoes():
         else:
             raise Exception(f"Erro {response.status_code}: Não foi possível obter as cotações.")
     except requests.exceptions.ConnectionError as e:
-        print(f'Erro de conexão. Detalhes: {e}')
+        logger.error(f'Erro de conexão com a API: {e}')
         return None
     except requests.exceptions.Timeout as e:
-        print(f'Erro de timeout: A requisição demorou muito para responder. Detalhes: {e}')
+        logger.warning(f'Timeout na requisição à API: {e}')
         return None
     except Exception as e:
-        print(f'Erro na requisição: {e}')
+        logger.error(f'Erro na requisição: {e}')
         return None

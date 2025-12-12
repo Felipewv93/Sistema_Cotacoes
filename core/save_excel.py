@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+from core import configurar_logger, logger
 
 def salvar_excel(cotacoes):
     try:
@@ -13,10 +14,10 @@ def salvar_excel(cotacoes):
             df_final = df_novo
         
         df_final.to_excel(arquivo, index=False)
-        print('Cotações salvas no arquivo Excel com sucesso!')
+        logger.info(f'Cotações salvas no Excel (total: {len(df_final)} registros)')
     
     except PermissionError as e:
-        print(f'Erro de permissão ao salvar o arquivo Excel: {e}')
+        logger.error(f'Erro de permissão ao salvar Excel: {e}')
     except Exception as e:
-        print(f'Erro ao salvar o arquivo Excel: {e}')
+        logger.error(f'Erro ao salvar Excel: {e}')
     return

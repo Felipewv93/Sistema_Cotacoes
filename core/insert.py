@@ -1,4 +1,5 @@
 import sqlite3
+from core import configurar_logger, logger
 
 def inserir_dados(cotacoes):
     try:
@@ -12,12 +13,12 @@ def inserir_dados(cotacoes):
                 )
         banco.commit()
         banco.close()
-        print('Cotações inseridas no banco de dados com sucesso!')
+        logger.info('Cotações inseridas no banco de dados SQLite')
 
     except sqlite3.OperationalError as e:
-        print(f'Erro operacional ao inserir dados no banco: {e}')
+        logger.error(f'Erro operacional no banco SQLite: {e}')
     except sqlite3.IntegrityError as e:
-        print(f'Erro de integridade ao inserir dados no banco: {e}')
+        logger.error(f'Erro de integridade no banco SQLite: {e}')
     except sqlite3.Error as e:
-        print(f'Erro ao inserir dados no banco de dados: {e}')
+        logger.error(f'Erro ao inserir no banco SQLite: {e}')
     return

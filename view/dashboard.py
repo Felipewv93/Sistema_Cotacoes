@@ -12,6 +12,34 @@ from core.data_analysis import cotacoes_do_dia, calcular_variacao, calcular_medi
 
 def gerar_dashboard():
     st.set_page_config(page_title="Dashboard de Cotações", page_icon="💰", layout="wide")
+
+    st.markdown("""
+        <style>
+        .stApp {
+            background: linear-gradient(135deg, #000000, #151515, #303030);
+        }
+                
+        h1 {
+            color: #8B00FF !important;
+            font-size: 45px !important;
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif !important;
+        }
+                
+        .stColumn {
+            background: #101010;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #303030;
+            box-shadow: 3px 3px 0 0 #303030;
+        }
+                
+        
+        [data-testid="stPlotlyChart"] {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+    """, unsafe_allow_html=True)
     
     st.title("💰 Dashboard de Cotações")
     st.markdown("---")
@@ -127,11 +155,13 @@ def gerar_dashboard():
             yaxis2=dict(
                 title="Reais (BRL) - Bitcoin",
                 overlaying='y',
-                side='right'
+                side='right',
             ),
             hovermode='x unified',
             height=500,
-            legend=dict(orientation="h", yanchor="bottom", y=1.1, xanchor="right", x=1)
+            legend=dict(orientation="h", yanchor="bottom", y=1.1, xanchor="right", x=1),
+            plot_bgcolor='#101010',
+            paper_bgcolor='#101010'
         )
         
         st.plotly_chart(fig_todas, use_container_width=True)

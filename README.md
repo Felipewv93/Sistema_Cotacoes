@@ -36,8 +36,9 @@ Este projeto busca cotações atualizadas de Dólar (USD), Euro (EUR) e Bitcoin 
 projeto_dados/
 │
 ├── main.py                 # Arquivo principal de execução
-├── requirements.txt        # Dependências do projeto
 ├── README.md               # Documentação do projeto
+├── requirements.txt        # Dependências do projeto
+├── scheduler.py            # Coleta automatizada de cotações
 │
 ├── api/
 │   └── request.py          # Requisições à API de cotações
@@ -45,18 +46,22 @@ projeto_dados/
 ├── core/
 │   ├── insert.py           # Inserção de dados no banco
 │   ├── save_excel.py       # Salvamento em Excel
-│   └── data_analysis.py    # Análise de dados (variações, médias móveis)
+│   ├── data_analysis.py    # Análise de dados (variações, médias móveis)
+│   └── logger.py           # Sistema de logs
 │
+├── data/                   # Diretório para armazenamento
+|   ├── database.db         # Banco de dados SQLite (gerado)
+|   └── cotacoes.xlsx       # Planilha Excel (gerada)
+|
+├── logs/
+│   └── app.log             # Logs gerados automaticamente
+|
 ├── model/
 │   ├── __init__.py         # Inicialização do módulo
 │   └── database.py         # Configuração do banco de dados
 │
-├── view/
-│   └── dashboard.py        # Dashboard interativo com Streamlit
-│
-└── data/                   # Diretório para armazenamento
-    ├── database.db         # Banco de dados SQLite (gerado)
-    └── cotacoes.xlsx       # Planilha Excel (gerada)
+└── view/
+    └── dashboard.py        # Dashboard interativo com Streamlit
 ```
 
 ## 🛠️ Tecnologias Utilizadas
@@ -163,6 +168,7 @@ Você pode criar um loop no código ou usar ferramentas como `schedule` para aut
 - Certifique-se de ter conexão com a internet para acessar a API
 - O banco de dados e a planilha são criados automaticamente na primeira execução
 - Dados anteriores são preservados - cada execução adiciona uma nova linha
+- Logs de execução são salvos em `logs/app.log` (máximo 5MB, mantém 3 backups)
 
 ## 🚀 Próximos Passos
 
