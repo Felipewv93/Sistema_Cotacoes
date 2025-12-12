@@ -16,7 +16,7 @@ def gerar_dashboard():
     st.markdown("""
         <style>
         .stApp {
-            background: linear-gradient(135deg, #000000, #151515, #303030);
+            background: linear-gradient(135deg, #151515, #252525);
         }
                 
         h1 {
@@ -32,13 +32,7 @@ def gerar_dashboard():
             border-radius: 10px;
             border: 1px solid #303030;
             box-shadow: 3px 3px 0 0 #303030;
-        }
-                
-        
-        [data-testid="stPlotlyChart"] {
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
+        }       
     """, unsafe_allow_html=True)
     
     st.title("💰 Dashboard de Cotações")
@@ -175,6 +169,10 @@ def gerar_dashboard():
             markers=True,
             labels={'data_hora': 'Horário', 'dolar': 'Valor (BRL)'}
         )
+        fig_dolar.update_layout(
+            plot_bgcolor='#101010',
+            paper_bgcolor='#101010'
+        )
         fig_dolar.update_traces(line_color='green')
         st.plotly_chart(fig_dolar, use_container_width=True)
     
@@ -187,6 +185,10 @@ def gerar_dashboard():
             markers=True,
             labels={'data_hora': 'Horário', 'euro': 'Valor (BRL)'}
         )
+        fig_euro.update_layout(
+            plot_bgcolor='#101010',
+            paper_bgcolor='#101010'
+        )
         fig_euro.update_traces(line_color='blue')
         st.plotly_chart(fig_euro, use_container_width=True)
     
@@ -198,6 +200,10 @@ def gerar_dashboard():
             title='Cotação do Bitcoin',
             markers=True,
             labels={'data_hora': 'Horário', 'bitcoin': 'Valor (BRL)'}
+        )
+        fig_bitcoin.update_layout(
+            plot_bgcolor='#101010',
+            paper_bgcolor='#101010'
         )
         fig_bitcoin.update_traces(line_color='orange')
         st.plotly_chart(fig_bitcoin, use_container_width=True)
@@ -225,7 +231,7 @@ def gerar_dashboard():
     )
     
     fig_barras.update_traces(texttemplate='%{text:.2f}%', textposition='outside')
-    fig_barras.update_layout(height=475, xaxis_title=None)
+    fig_barras.update_layout(height=475, xaxis_title=None, plot_bgcolor='#101010', paper_bgcolor='#101010')
     
     st.plotly_chart(fig_barras, use_container_width=True)
     

@@ -194,7 +194,7 @@ Melhorias planejadas para versões futuras:
 
 ### Automação e Robustez
 - [x] Implementar coleta automática periódica (scheduler)
-- [ ] Sistema de logs de execução
+- [x] Sistema de logs de execução
 - [x] Tratamento de erros (API fora do ar, sem internet)
 - [x] Validação e sanitização de dados
 - [ ] Testes unitários para funções principais
