@@ -24,11 +24,12 @@ scheduler.add_job(
     day_of_week='mon-fri',
     hour='9-18',
     minute=0 ,
+    misfire_grace_time=1800
 )
 
 print("=" * 60)
 print("Scheduler iniciado!")
-print("Horário de coleta: Segunda a Sexta, das 9h às 18h (de hora em hora)")
+print("Horário de coleta: Segunda à Sexta, das 9h às 18h (de hora em hora)")
 print("Pressione Ctrl+C para parar.")
 print("=" * 60)
 

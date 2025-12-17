@@ -11,7 +11,7 @@ from core.data_analysis import cotacoes_do_dia, calcular_variacao, calcular_medi
 
 
 def gerar_dashboard():
-    st.set_page_config(page_title="Dashboard de Cotações", page_icon="💰", layout="wide")
+    st.set_page_config(page_title="Dashboard de Cotações", layout="wide")
 
     st.markdown("""
         <style>
@@ -35,7 +35,7 @@ def gerar_dashboard():
         }       
     """, unsafe_allow_html=True)
     
-    st.title("💰 Dashboard de Cotações")
+    st.title("Dashboard de Cotações")
     st.markdown("---")
     
     # Obter dados usando analytics
