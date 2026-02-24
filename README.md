@@ -199,10 +199,6 @@ Melhorias planejadas para versões futuras:
 - [x] Validação e sanitização de dados
 - [ ] Testes unitários para funções principais
 
-### Notificações
-- [ ] Alertas por email quando cotação atingir determinado valor
-- [ ] Relatório diário/semanal automático
-
 ## 👤 Autor
 
 Felipe Viana
