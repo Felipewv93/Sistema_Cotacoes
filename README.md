@@ -2,13 +2,13 @@
 
 Sistema automatizado para coleta e armazenamento de cotações de moedas (Dólar, Euro e Bitcoin) em tempo real.
 
-## 📋 Descrição
+## Descrição
 
 Este projeto busca cotações atualizadas de Dólar (USD), Euro (EUR) e Bitcoin (BTC) através da API AwesomeAPI e armazena os dados em:
 - Banco de dados SQLite
 - Arquivo Excel (.xlsx)
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
 ### Coleta de Dados
 - ✅ Busca de cotações em tempo real via API REST
@@ -30,7 +30,7 @@ Este projeto busca cotações atualizadas de Dólar (USD), Euro (EUR) e Bitcoin 
 - ✅ Métricas em tempo real (valores atuais e variações)
 - ✅ Visualização com Plotly (gráficos interativos)
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 projeto_dados/
@@ -64,7 +64,7 @@ projeto_dados/
     └── dashboard.py        # Dashboard interativo com Streamlit
 ```
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **Python 3.x**
 - **requests** - Requisições HTTP à API
@@ -74,7 +74,7 @@ projeto_dados/
 - **streamlit** - Dashboard interativo
 - **plotly** - Visualização de dados interativa
 
-## 📦 Instalação
+## Instalação
 
 1. Clone o repositório ou baixe os arquivos do projeto
 
@@ -85,7 +85,7 @@ pip install -r requirements.txt
 
 3. Certifique-se de que a pasta `data/` existe (será criada automaticamente ao executar)
 
-## ▶️ Como Usar
+## Como Usar
 
 ### Coleta de Cotações
 
@@ -116,7 +116,7 @@ O dashboard exibe:
 - Gráfico de variações diárias (barras)
 - Médias móveis calculadas automaticamente
 
-## 📊 Dados Coletados
+## Dados Coletados
 
 Para cada execução, o sistema coleta:
 
@@ -127,13 +127,13 @@ Para cada execução, o sistema coleta:
 | euro       | Cotação do Euro (EUR → BRL)         |
 | bitcoin    | Cotação do Bitcoin (BTC → BRL)      |
 
-## 🔄 API Utilizada
+## API Utilizada
 
 **AwesomeAPI - Economia**
 - Endpoint: `https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,BTC-BRL`
 - Documentação: [https://docs.awesomeapi.com.br](https://docs.awesomeapi.com.br)
 
-## 💾 Armazenamento
+## Armazenamento
 
 ### Banco de Dados SQLite
 - Arquivo: `data/database.db`
@@ -145,7 +145,7 @@ Para cada execução, o sistema coleta:
 - Formato: Cada linha representa uma coleta
 - Atualização: Modo append (adiciona sem sobrescrever)
 
-## 🔍 Exemplos de Uso
+## Exemplos de Uso
 
 ### Coleta e armazenamento dos dados
 ```bash
@@ -163,14 +163,14 @@ Configure o Agendador de Tarefas do Windows para executar `main.py` em intervalo
 ### Execução periódica (Script)
 Você pode criar um loop no código ou usar ferramentas como `schedule` para automatizar coletas.
 
-## ⚠️ Observações
+## Observações
 
 - Certifique-se de ter conexão com a internet para acessar a API
 - O banco de dados e a planilha são criados automaticamente na primeira execução
 - Dados anteriores são preservados - cada execução adiciona uma nova linha
 - Logs de execução são salvos em `logs/app.log` (máximo 5MB, mantém 3 backups)
 
-## 🚀 Próximos Passos
+## Próximos Passos
 
 Melhorias planejadas para versões futuras:
 
