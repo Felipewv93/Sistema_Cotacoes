@@ -199,6 +199,6 @@ Melhorias planejadas para versões futuras:
 - [x] Validação e sanitização de dados
 - [ ] Testes unitários para funções principais
 
-## 👤 Autor
+## Autor
 
 Felipe Viana
