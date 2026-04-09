@@ -1,203 +1,172 @@
-# Sistema de Coleta de Cotações
+# Sistema de Coleta e Monitoramento de Cotações
 
-Sistema automatizado para coleta e armazenamento de cotações de moedas (Dólar, Euro e Bitcoin) em tempo real.
+Pipeline em Python para captura, persistência e visualização de cotações de moedas e criptomoedas em tempo real. O projeto coleta dados da AwesomeAPI, registra as informações em SQLite e Excel, e disponibiliza uma interface analítica com Streamlit e Plotly.
 
-## Descrição
+## Visão Geral
 
-Este projeto busca cotações atualizadas de Dólar (USD), Euro (EUR) e Bitcoin (BTC) através da API AwesomeAPI e armazena os dados em:
-- Banco de dados SQLite
-- Arquivo Excel (.xlsx)
+Este projeto foi desenvolvido com foco em um fluxo simples, observável e reproduzível de dados. Ele demonstra boas práticas comuns em engenharia de dados, como ingestão automatizada, armazenamento incremental, análise temporal e disponibilização de métricas para consumo rápido.
+
+### Destaques técnicos
+
+- Ingestão automatizada de cotações via API REST
+- Persistência em SQLite para histórico estruturado
+- Exportação incremental para planilha Excel
+- Logs de execução para rastreabilidade e diagnóstico
+- Análise temporal com variação diária e média móvel
+- Dashboard interativo para acompanhamento dos dados
+
+## Arquitetura
+
+Fluxo principal:
+
+1. Consulta à AwesomeAPI para obter cotações de Dólar, Euro e Bitcoin
+2. Normalização dos dados retornados pela API
+3. Persistência em SQLite
+4. Gravação incremental em Excel
+5. Cálculo de indicadores analíticos
+6. Exibição dos resultados no dashboard
 
 ## Funcionalidades
 
-### Coleta de Dados
-- ✅ Busca de cotações em tempo real via API REST
-- ✅ Armazenamento em banco de dados SQLite
-- ✅ Exportação para planilha Excel
-- ✅ Registro de data e hora de cada coleta
-- ✅ Acumulação de dados (adiciona novas linhas sem sobrescrever)
+### Coleta e persistência
 
-### Análise de Dados
-- ✅ Filtragem de cotações do dia atual
-- ✅ Cálculo de variação percentual entre primeira e última cotação do dia
-- ✅ Cálculo de média móvel (configurável, padrão 7 dias)
-- ✅ Identificação automática da última cotação de cada dia
+- Coleta cotações em tempo real de USD, EUR e BTC em relação ao BRL
+- Registra data e hora de cada captura
+- Persiste os dados em banco SQLite
+- Mantém histórico em planilha Excel sem sobrescrever registros anteriores
+
+### Análise de dados
+
+- Filtra as cotações do dia atual
+- Calcula a variação percentual entre a primeira e a última leitura do dia
+- Calcula média móvel com janela padrão de 7 dias
+- Identifica automaticamente as últimas cotações diárias para análise histórica
 
 ### Visualização
-- ✅ Dashboard interativo com Streamlit
-- ✅ Gráficos de linha para evolução das cotações
-- ✅ Gráficos de barras para variações diárias
-- ✅ Métricas em tempo real (valores atuais e variações)
-- ✅ Visualização com Plotly (gráficos interativos)
+
+- Dashboard interativo com Streamlit
+- Gráficos de linha para evolução temporal
+- Comparação visual entre moedas com Plotly
+- Gráfico de barras para variação percentual diária
+- Tabela detalhada com os registros mais recentes
+
+## Stack Utilizada
+
+- Python 3.x
+- requests para consumo da API
+- pandas para manipulação e análise de dados
+- openpyxl para exportação em Excel
+- sqlite3 para persistência local
+- streamlit para interface analítica
+- plotly para visualização interativa
+- APScheduler para automação periódica
 
 ## Estrutura do Projeto
 
 ```
-projeto_dados/
-│
-├── main.py                 # Arquivo principal de execução
-├── README.md               # Documentação do projeto
-├── requirements.txt        # Dependências do projeto
-├── scheduler.py            # Coleta automatizada de cotações
-│
+├── main.py
+├── scheduler.py
+├── requirements.txt
+├── README.md
 ├── api/
-│   └── request.py          # Requisições à API de cotações
-│
+│   └── request.py
 ├── core/
-│   ├── insert.py           # Inserção de dados no banco
-│   ├── save_excel.py       # Salvamento em Excel
-│   ├── data_analysis.py    # Análise de dados (variações, médias móveis)
-│   └── logger.py           # Sistema de logs
-│
-├── data/                   # Diretório para armazenamento
-|   ├── database.db         # Banco de dados SQLite (gerado)
-|   └── cotacoes.xlsx       # Planilha Excel (gerada)
-|
-├── logs/
-│   └── app.log             # Logs gerados automaticamente
-|
+│   ├── data_analysis.py
+│   ├── insert.py
+│   ├── logger.py
+│   └── save_excel.py
 ├── model/
-│   ├── __init__.py         # Inicialização do módulo
-│   └── database.py         # Configuração do banco de dados
-│
-└── view/
-    └── dashboard.py        # Dashboard interativo com Streamlit
+│   └── database.py
+├── view/
+│   └── dashboard.py
+├── data/
+└── logs/
 ```
 
-## Tecnologias Utilizadas
+## Fonte de Dados
 
-- **Python 3.x**
-- **requests** - Requisições HTTP à API
-- **pandas** - Manipulação de dados e Excel
-- **openpyxl** - Engine para arquivos Excel
-- **sqlite3** - Banco de dados (built-in)
-- **streamlit** - Dashboard interativo
-- **plotly** - Visualização de dados interativa
+O projeto utiliza a AwesomeAPI Economia:
 
-## Instalação
+- Endpoint: https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,BTC-BRL
+- Documentação: https://docs.awesomeapi.com.br
 
-1. Clone o repositório ou baixe os arquivos do projeto
+## Armazenamento
 
-2. Instale as dependências necessárias:
+### SQLite
+
+- Arquivo: `data/database.db`
+- Tabela principal: `cotacoes`
+- Campos: `id`, `data_hora`, `dolar`, `euro`, `bitcoin`
+
+### Excel
+
+- Arquivo: `data/cotacoes.xlsx`
+- Cada linha representa uma coleta executada
+- Atualização em modo append, preservando o histórico
+
+## Como Executar
+
+### Instalação
+
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Certifique-se de que a pasta `data/` existe (será criada automaticamente ao executar)
-
-## Como Usar
-
-### Coleta de Cotações
-
-Execute o arquivo principal:
+### Execução da coleta
 
 ```bash
 python main.py
 ```
 
-O sistema irá:
-1. Buscar as cotações atuais de Dólar, Euro e Bitcoin
-2. Inserir os dados no banco de dados SQLite
-3. Adicionar os dados na planilha Excel (criando nova linha)
-4. Calcular variações do dia atual
-5. Exibir mensagens de confirmação
+Esse comando realiza uma coleta única, persiste os dados e atualiza a planilha Excel.
 
-### Dashboard Interativo
-
-Para visualizar o dashboard com gráficos e análises:
+### Execução do dashboard
 
 ```bash
 streamlit run view/dashboard.py
 ```
 
-O dashboard exibe:
-- Valores atuais das cotações com variações percentuais
-- Gráfico de evolução temporal (linhas)
-- Gráfico de variações diárias (barras)
-- Médias móveis calculadas automaticamente
+### Execução dos testes
 
-## Dados Coletados
-
-Para cada execução, o sistema coleta:
-
-| Campo      | Descrição                           |
-|------------|-------------------------------------|
-| data_hora  | Data e hora da coleta               |
-| dolar      | Cotação do Dólar (USD → BRL)        |
-| euro       | Cotação do Euro (EUR → BRL)         |
-| bitcoin    | Cotação do Bitcoin (BTC → BRL)      |
-
-## API Utilizada
-
-**AwesomeAPI - Economia**
-- Endpoint: `https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,BTC-BRL`
-- Documentação: [https://docs.awesomeapi.com.br](https://docs.awesomeapi.com.br)
-
-## Armazenamento
-
-### Banco de Dados SQLite
-- Arquivo: `data/database.db`
-- Tabela: `cotacoes`
-- Estrutura: id (PK), data_hora, dolar, euro, bitcoin
-
-### Planilha Excel
-- Arquivo: `data/cotacoes.xlsx`
-- Formato: Cada linha representa uma coleta
-- Atualização: Modo append (adiciona sem sobrescrever)
-
-## Exemplos de Uso
-
-### Coleta e armazenamento dos dados
 ```bash
-python main.py
+pytest
 ```
 
-### Gerar Dashboard
+Opcionalmente, para saída detalhada:
+
 ```bash
-streamlit run view/dashboard.py
+pytest -v
 ```
 
-### Execução periódica (Windows Task Scheduler)
-Configure o Agendador de Tarefas do Windows para executar `main.py` em intervalos regulares.
+## Automação
 
-### Execução periódica (Script)
-Você pode criar um loop no código ou usar ferramentas como `schedule` para automatizar coletas.
+O arquivo `scheduler.py` executa coletas automáticas de segunda a sexta, das 9h às 18h, em intervalos de 1 hora. Isso simula um pipeline recorrente de ingestão, útil para acompanhar a evolução dos dados ao longo do dia.
+
+## Resultado Gerado
+
+Para cada execução, o sistema registra:
+
+| Campo | Descrição |
+| --- | --- |
+| `data_hora` | Data e hora da coleta |
+| `dolar` | Cotação do Dólar (USD → BRL) |
+| `euro` | Cotação do Euro (EUR → BRL) |
+| `bitcoin` | Cotação do Bitcoin (BTC → BRL) |
 
 ## Observações
 
-- Certifique-se de ter conexão com a internet para acessar a API
+- É necessária conexão com a internet para consumir a API
 - O banco de dados e a planilha são criados automaticamente na primeira execução
-- Dados anteriores são preservados - cada execução adiciona uma nova linha
-- Logs de execução são salvos em `logs/app.log` (máximo 5MB, mantém 3 backups)
+- Os registros anteriores são preservados a cada nova coleta
+- Os logs são gravados em `logs/app.log`
 
-## Próximos Passos
+## Evoluções Futuras
 
-Melhorias planejadas para versões futuras:
-
-### Análise de Dados
-- [x] Calcular variação percentual diária das cotações
-- [x] Implementar médias móveis (7, 14, 30 dias)
-- [ ] Comparação entre períodos (semanal, mensal)
-- [ ] Identificar tendências de alta/baixa
-
-### Visualização
-- [x] Criar gráficos de linha mostrando evolução das cotações
-- [x] Dashboard interativo com Streamlit ou Dash
-- [x] Gráficos de correlação entre moedas
-- [x] Indicadores visuais de variação
-
-### Expansão de Dados
-- [ ] Coletar dados históricos (últimos 30/90 dias)
-- [ ] Adicionar mais moedas e criptomoedas
-- [ ] Calcular indicadores técnicos (RSI, MACD)
-- [ ] Incluir volume de negociação
-
-### Automação e Robustez
-- [x] Implementar coleta automática periódica (scheduler)
-- [x] Sistema de logs de execução
-- [x] Tratamento de erros (API fora do ar, sem internet)
-- [x] Validação e sanitização de dados
-- [ ] Testes unitários para funções principais
+- Ingestão de histórico para janelas maiores de análise
+- Adição de novas moedas e ativos digitais
+- Métricas adicionais de tendência e volatilidade
+- Testes automatizados para as rotinas principais
+- Versionamento e observabilidade mais robustos para cenários de produção
 
 ## Autor
 
