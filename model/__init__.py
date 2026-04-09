@@ -1,1 +1,3 @@
-from .database import banco, cursor
+from .database import inicializar_banco
+
+inicializar_banco()
