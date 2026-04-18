@@ -72,7 +72,7 @@ class TestIntegracaoEndToEnd(unittest.TestCase):
 
             inserir_dados(cotacoes)
             # Validar que foi chamado corretamente
-            mock_cursor.execute.assert_called_once()
+            self.assertGreaterEqual(mock_cursor.execute.call_count, 2)
 
         # Simular salva em Excel com dados reais
         df_novo = pd.DataFrame([cotacoes])
