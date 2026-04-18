@@ -162,7 +162,7 @@ class TestFuncoesInsercaoDados(unittest.TestCase):
             inserir_dados(cotacoes)
             mock_connect.assert_called_once()
             mock_conn.cursor.assert_called_once()
-            mock_cursor.execute.assert_called_once()
+            self.assertEqual(mock_cursor.execute.call_count, 2)
             mock_conn.commit.assert_called_once()
             mock_conn.close.assert_called_once()
             print("Teste inserir_dados passou com sucesso.")
@@ -203,6 +203,36 @@ class TestFuncoesInsercaoDados(unittest.TestCase):
             'data_hora': '2025-12-16 10:00:00'
         }
         inserir_dados(cotacoes)
+        mock_error.assert_called_once()
+
+    @patch('core.insert.logger.error')
+    @patch('core.insert.sqlite3.connect')
+    def test_inserir_dados_payload_invalido_nao_conecta_banco(self, mock_connect, mock_error):
+        inserir_dados({'dolar': 5.25})
+
+        mock_connect.assert_not_called()
+        mock_error.assert_called()
+
+    @patch('core.insert.logger.error')
+    @patch('core.insert.sqlite3.connect')
+    def test_inserir_dados_faz_rollback_quando_execute_falha(self, mock_connect, mock_error):
+        mock_conn = Mock()
+        mock_cursor = Mock()
+        mock_cursor.execute.side_effect = sqlite3.OperationalError('falha no execute')
+        mock_conn.cursor.return_value = mock_cursor
+        mock_connect.return_value = mock_conn
+
+        cotacoes = {
+            'dolar': 5.25,
+            'euro': 6.20,
+            'bitcoin': 250000.00,
+            'data_hora': '2025-12-16 10:00:00'
+        }
+
+        inserir_dados(cotacoes)
+
+        mock_conn.rollback.assert_called_once()
+        mock_conn.close.assert_called_once()
         mock_error.assert_called_once()
 
 # Teste de salvar_excel feito verificando se não lança exceção
@@ -266,6 +296,14 @@ class TestSalvarExcel(unittest.TestCase):
         }
         salvar_excel(cotacoes)
         mock_error.assert_called_once()
+
+    @patch('core.save_excel.logger.error')
+    @patch('pandas.DataFrame.to_excel')
+    def test_salvar_excel_payload_invalido_nao_grava_arquivo(self, mock_to_excel, mock_error):
+        salvar_excel({'dolar': 5.25})
+
+        mock_to_excel.assert_not_called()
+        mock_error.assert_called()
 
 class TestFuncoesAnalise(unittest.TestCase):
     def setUp(self):
