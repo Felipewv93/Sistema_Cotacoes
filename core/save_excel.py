@@ -1,11 +1,17 @@
 import pandas as pd
 import os
-from core import configurar_logger, logger
+from core.logger import logger
+from core.validation import validar_cotacoes
 
 def salvar_excel(cotacoes):
+    cotacoes_validas = validar_cotacoes(cotacoes)
+    if cotacoes_validas is None:
+        logger.error('Salvamento cancelado: payload de cotações inválido')
+        return
+
     try:
         arquivo = 'data/cotacoes.xlsx'
-        df_novo = pd.DataFrame([cotacoes])
+        df_novo = pd.DataFrame([cotacoes_validas])
         
         if os.path.exists(arquivo):
             df_existente = pd.read_excel(arquivo)
